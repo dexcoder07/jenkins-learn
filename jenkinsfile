@@ -7,8 +7,8 @@ pipeline {
                     try {
                         sh '''
                             #!/bin/bash
-			    sudo apt get update
-			    sudo apt install nginx
+			    apt get update
+			    apt install nginx
                         '''
                     } catch (Exception e) {
                         error "Docker installation failed: ${e.message}"
