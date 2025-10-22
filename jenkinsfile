@@ -1,43 +1,14 @@
 pipeline {
     agent any
     stages {
-        stage('Install Docker') {
+        stage('Install Nginx') {
             steps {
                 script {
                     try {
                         sh '''
                             #!/bin/bash
-                            set -e
-                            
-                            echo "Updating package index..."
-                            sudo apt-get update
-                            
-                            echo "Installing prerequisites..."
-                            sudo apt-get install -y apt-transport-https ca-certificates curl software-properties-common
-                            
-                            echo "Adding Docker GPG key..."
-                            curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-                            
-                            echo "Adding Docker repository..."
-                            sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
-                            
-                            echo "Updating package index again..."
-                            sudo apt-get update
-                            
-                            echo "Installing Docker..."
-                            sudo apt-get install -y docker-ce docker-ce-cli containerd.io
-                            
-                            echo "Enabling and starting Docker service..."
-                            sudo systemctl enable docker
-                            sudo systemctl start docker
-                            
-                            echo "Verifying Docker installation..."
-                            docker --version
-                            
-                            echo "Adding user to docker group..."
-                            sudo usermod -aG docker $USER
-                            
-                            echo "Docker installation completed successfully!"
+			    sudo apt get update
+			    sudo apt install nginx
                         '''
                     } catch (Exception e) {
                         error "Docker installation failed: ${e.message}"
